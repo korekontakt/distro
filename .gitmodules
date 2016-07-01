@@ -24,7 +24,7 @@
 	url = https://github.com/torch/cutorch.git
 [submodule "pkg/torch"]
 	path = pkg/torch
-	url = https://github.com/torch/torch7.git
+	url = https://github.com/korekontakt/torch7.git
 [submodule "pkg/sundown"]
 	path = pkg/sundown
 	url = https://github.com/torch/sundown-ffi.git
@@ -60,7 +60,7 @@
 	url = https://github.com/soumith/cudnn.torch.git
 [submodule "exe/trepl"]
 	path = exe/trepl
-	url = https://github.com/torch/trepl.git
+	url = https://github.com/korekontakt/trepl.git
 [submodule "extra/audio"]
 	path = extra/audio
 	url = https://github.com/soumith/lua---audio.git
