@@ -10,7 +10,8 @@ curl -s https://raw.githubusercontent.com/torch/distro/master/install-deps | bas
 
 Install this repo, which installs the torch distribution, with a lot of nice goodies.
 ```sh
-git clone https://github.com/torch/distro.git ~/torch --recursive
+# git clone https://github.com/torch/distro.git ~/torch --recursive # Official torch
+git clone https://github.com/korekontakt/distro.git ~/torch --recursive
 cd ~/torch; ./install.sh
 ```
 
