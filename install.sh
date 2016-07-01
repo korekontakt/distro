@@ -54,6 +54,7 @@ fi
 
 # FreeBSD
 if [[ `uname` == "FreeBSD" ]]; then
+    export CMAKE_INCLUDE_PATH=/usr/local/include:$CMAKE_INCLUDE_PATH
     export CMAKE_LIBRARY_PATH=/usr/local/include:/usr/local/lib:$CMAKE_LIBRARY_PATH
     export CC=clang
     export CXX=clang++
