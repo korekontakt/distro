@@ -102,12 +102,13 @@ elif [[ "$(uname)" == 'Linux' ]]; then
         exit 1
     fi
 
+    DISTRO=`echo ${DISTRO,,}`
     # Detect fedora
     if [[ "$DISTRO" = "fedora" ]]; then
         distribution="fedora"
         fedora_major_version="$VERSION"
     # Detect archlinux
-    elif [[ "$DISTRO" = "arch" ]]; then
+    elif [[ "$DISTRO" = "arch"]]; then
         distribution="archlinux"
     # Detect Ubuntu
     elif [[ "$DISTRO" = "ubuntu" ]]; then
@@ -284,9 +285,9 @@ elif [[ "$(uname)" == 'Linux' ]]; then
     fi
 
 elif [[ "$(uname)" == 'FreeBSD' ]]; then
-    pkg install ImageMagick7 cmake curl fftw3 git gnuplot libjpeg-turbo \
+    pkg install -y ImageMagick7 cmake curl fftw3 git gnuplot libjpeg-turbo \
         libzmq3 ncurses node npm openblas openssl png py27-ipython \
-        py27-pip qt4-corelib qt4-gui readline unzip sox
+        py27-pip qt4-corelib qt4-gui readline unzip sox clang
 
 else
     # Unsupported
