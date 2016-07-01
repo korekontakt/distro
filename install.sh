@@ -52,6 +52,13 @@ if [[ `uname` == "Darwin" ]]; then
     export CXX=clang++
 fi
 
+# FreeBSD
+if [[ `uname` == "FreeBSD" ]]; then
+    export CMAKE_LIBRARY_PATH=/usr/local/include:/usr/local/lib:$CMAKE_LIBRARY_PATH
+    export CC=clang
+    export CXX=clang++
+fi
+
 echo "Installing Lua version: ${TORCH_LUA_VERSION}"
 mkdir -p install
 mkdir -p build
