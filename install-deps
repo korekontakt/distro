@@ -287,7 +287,7 @@ elif [[ "$(uname)" == 'Linux' ]]; then
 elif [[ "$(uname)" == 'FreeBSD' ]]; then
     sudo pkg install ImageMagick7 cmake curl fftw3 git gnuplot libjpeg-turbo \
         libzmq4 ncurses node npm openblas openssl png py27-ipython \
-        py27-pip qt4-corelib qt4-gui readline unzip sox gcc7-devel bash
+        py27-pip qt4-corelib qt4-gui readline unzip sox gcc bash
 
 else
     # Unsupported
