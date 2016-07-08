@@ -50,14 +50,12 @@ if [[ `uname` == "Darwin" ]]; then
     # does not play nice with any recent GCC version.
     export CC=clang
     export CXX=clang++
-fi
-
-# FreeBSD
-if [[ `uname` == "FreeBSD" ]]; then
-	export CMAKE_INCLUDE_PATH=/usr/local/lib/gcc48/include/c++/x86_64-portbld-freebsd11.0:/usr/local/lib/gcc48/include:/usr/local/include:/usr/include:$CMAKE_INCLUDE_PATH
-    export CMAKE_LIBRARY_PATH=/usr/local/lib/gcc48:/usr/local/lib:/usr/lib:/lib:$CMAKE_LIBRARY_PATH
-    export CC=clang
-    export CXX=clang++
+elif [[ `uname` == "FreeBSD" ]]; then
+    # clang can't compile torch7 properly. 
+    # openblas can't be found with clang.
+    export LD_LIBRARY_PATH=/usr/local/lib/gcc48:$LD_LIBRARY_PATH
+    export CC=gcc
+    export CXX=g++
 fi
 
 echo "Installing Lua version: ${TORCH_LUA_VERSION}"
@@ -96,33 +94,13 @@ cd ${THIS_DIR}/extra/penlight && $PREFIX/bin/luarocks make || exit 1
 cd ${THIS_DIR}/extra/lua-cjson && $PREFIX/bin/luarocks make || exit 1
 
 echo "Installing core Torch packages"
-# FreeBSD
-if [[ `uname` == "FreeBSD" ]]; then
-    export CC=gcc
-    export CXX=g++
-fi
 cd ${THIS_DIR}/extra/luaffifb && $PREFIX/bin/luarocks make                             || exit 1
-# FreeBSD
-if [[ `uname` == "FreeBSD" ]]; then
-    export CC=clang
-    export CXX=clang++
-fi
 cd ${THIS_DIR}/pkg/sundown   && $PREFIX/bin/luarocks make rocks/sundown-scm-1.rockspec || exit 1
 cd ${THIS_DIR}/pkg/cwrap     && $PREFIX/bin/luarocks make rocks/cwrap-scm-1.rockspec   || exit 1
 cd ${THIS_DIR}/pkg/paths     && $PREFIX/bin/luarocks make rocks/paths-scm-1.rockspec   || exit 1
-# FreeBSD
-if [[ `uname` == "FreeBSD" ]]; then
-    export CC=gcc
-    export CXX=g++
-fi
 cd ${THIS_DIR}/pkg/torch     && $PREFIX/bin/luarocks make rocks/torch-scm-1.rockspec   || exit 1
-# FreeBSD
-if [[ `uname` == "FreeBSD" ]]; then
-    export CC=clang
-    export CXX=clang++
-fi
 cd ${THIS_DIR}/pkg/dok       && $PREFIX/bin/luarocks make rocks/dok-scm-1.rockspec     || exit 1
-cd ${THIS_DIR}/exe/trepl     && $PREFIX/bin/luarocks make                              || exit 1
+cd ${THIS_DIR}/exe/trepl     && $PREFIX/bin/luarocks make trepl-scm-1.rockspec         || exit 1
 cd ${THIS_DIR}/pkg/sys       && $PREFIX/bin/luarocks make sys-1.1-0.rockspec           || exit 1
 cd ${THIS_DIR}/pkg/xlua      && $PREFIX/bin/luarocks make xlua-1.0-0.rockspec          || exit 1
 cd ${THIS_DIR}/extra/nn      && $PREFIX/bin/luarocks make rocks/nn-scm-1.rockspec      || exit 1
@@ -181,6 +159,10 @@ export LD_LIBRARY_PATH=$PREFIX/lib:\$LD_LIBRARY_PATH
 export DYLD_LIBRARY_PATH=$PREFIX/lib:\$DYLD_LIBRARY_PATH
 export LUA_CPATH='$CLIB_LUA_CPATH;'\$LUA_CPATH
 EOF
+if [[ `uname` == "FreeBSD" ]]; then
+    # Add the gcc48 lib path in order to load th.
+    echo "export LD_LIBRARY_PATH=/usr/local/lib/gcc48:\$LD_LIBRARY_PATH" >> $PREFIX/bin/torch-activate
+fi
 chmod +x $PREFIX/bin/torch-activate
 
 RC_FILE=0
