@@ -85,6 +85,14 @@ then
    fi
 fi
 
+if [ -x "$path_to_nvcc" ] || [ -x "$path_to_nvidiasmi" ]
+then
+    echo "Found CUDA on your machine. Installing CMake 3.6 modules to get up-to-date FindCUDA"
+    cd ${THIS_DIR}/cmake/3.6 && \
+(cmake -E make_directory build && cd build && cmake .. -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+        && make install) && echo "FindCuda bits of CMake 3.6 installed" || exit 1
+fi
+
 setup_lua_env_cmd=$($PREFIX/bin/luarocks path)
 eval "$setup_lua_env_cmd"
 
@@ -171,9 +179,6 @@ if [[ $(echo $SHELL | grep bash) ]]; then
     RC_FILE=$HOME/.bashrc
 elif [[ $(echo $SHELL | grep zsh) ]]; then
     RC_FILE=$HOME/.zshrc
-#elif [[ $(echo $SHELL | grep csh) ]]; then
-#	RC_FILE=$HOME/.cshrc
-#	sed -i -- 's/export /set /g' $PREFIX/bin/torch-activate
 else
     echo "
 
