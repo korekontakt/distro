@@ -51,8 +51,8 @@ if [[ `uname` == "Darwin" ]]; then
     export CC=clang
     export CXX=clang++
 elif [[ `uname` == "FreeBSD" ]]; then
-    # clang can't compile torch7 properly. 
-    # openblas can't be found with clang.
+    # Clang can't compile torch7 properly.
+    # OpenBLAS can't be found with Clang.
     export LD_LIBRARY_PATH=/usr/local/lib/gcc48:$LD_LIBRARY_PATH
     export CC=gcc
     export CXX=g++
